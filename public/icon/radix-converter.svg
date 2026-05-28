@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <rect x="4" y="8" width="40" height="32" rx="3" fill="#fff" stroke="#4a90d9" stroke-width="2"/>
+  <text x="8" y="22" font-family="monospace" font-size="8" font-weight="bold" fill="#4a90d9">10</text>
+  <text x="21" y="22" font-family="sans-serif" font-size="9" fill="#888">⇄</text>
+  <text x="28" y="22" font-family="monospace" font-size="8" font-weight="bold" fill="#e67e22">16</text>
+  <text x="8" y="34" font-family="monospace" font-size="8" font-weight="bold" fill="#27ae60">02</text>
+  <text x="21" y="34" font-family="sans-serif" font-size="9" fill="#888">⇄</text>
+  <text x="28" y="34" font-family="monospace" font-size="8" font-weight="bold" fill="#9b59b6">08</text>
+</svg>
