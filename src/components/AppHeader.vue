@@ -29,8 +29,10 @@ if (typeof document !== 'undefined') {
 <template>
   <header class="app-header">
     <div class="header-left">
-      <img src="/icon/YOCIM.png" class="logo-icon" />
-      <span class="logo-text">YOCIM BENCH</span>
+      <a href="https://yocim.top" target="_blank" class="logo-link" title="yocim.top">
+        <img src="/icon/YOCIM.png" class="logo-icon" />
+        <span class="logo-text">YOCIM BENCH</span>
+      </a>
     </div>
     <div class="header-right">
       <button class="theme-toggle" @click="theme.toggleTheme()" :title="theme.isDark ? 'Light mode' : 'Dark mode'">
@@ -68,6 +70,13 @@ if (typeof document !== 'undefined') {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
 }
 .logo-icon {
   width: 36px;
