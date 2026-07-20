@@ -103,6 +103,8 @@ function bringToFront() {
 
 function startDrag(e) {
   if (props.window.maximized) return
+  // 如果点击的是窗口控制按钮，不启动拖动
+  if (e.target.closest('.window-controls')) return
   isDragging.value = true
   const clientX = e.touches ? e.touches[0].clientX : e.clientX
   const clientY = e.touches ? e.touches[0].clientY : e.clientY
