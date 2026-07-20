@@ -30,10 +30,14 @@ const props = defineProps({
   window: {
     type: Object,
     required: true
+  },
+  isActive: {
+    type: Boolean,
+    default: false
   }
 })
 
-const emit = defineEmits(['close', 'minimize', 'maximize', 'restore'])
+const emit = defineEmits(['close', 'minimize', 'maximize', 'restore', 'focus'])
 
 const isDragging = ref(false)
 const dragOffsetX = ref(0)
@@ -73,7 +77,7 @@ const windowStyle = computed(() => {
       left: '0',
       top: '0',
       width: '100vw',
-      height: 'calc(100vh - 52px - 36px)',
+      height: 'calc(100vh - var(--taskbar-height))',
       zIndex: currentZ.value
     }
   }
@@ -94,21 +98,39 @@ const windowStyle = computed(() => {
 
 function bringToFront() {
   currentZ.value = zIndex++
+  emit('focus', props.window.id)
 }
 
 function startDrag(e) {
   if (props.window.maximized) return
   isDragging.value = true
-  dragOffsetX.value = e.clientX - props.window.x
-  dragOffsetY.value = e.clientY - props.window.y
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY
+  dragOffsetX.value = clientX - props.window.x
+  dragOffsetY.value = clientY - props.window.y
   document.addEventListener('mousemove', onMouseMove)
   document.addEventListener('mouseup', onMouseUp)
+  document.addEventListener('touchmove', onTouchMove, { passive: false })
+  document.addEventListener('touchend', onTouchEnd)
 }
 
 function onMouseMove(e) {
   if (!isDragging.value) return
   props.window.x = e.clientX - dragOffsetX.value
   props.window.y = e.clientY - dragOffsetY.value
+}
+
+function onTouchMove(e) {
+  if (!isDragging.value) return
+  e.preventDefault()
+  props.window.x = e.touches[0].clientX - dragOffsetX.value
+  props.window.y = e.touches[0].clientY - dragOffsetY.value
+}
+
+function onTouchEnd() {
+  isDragging.value = false
+  document.removeEventListener('touchmove', onTouchMove)
+  document.removeEventListener('touchend', onTouchEnd)
 }
 
 function onMouseUp() {
@@ -124,9 +146,10 @@ function onMouseUp() {
     :class="{ maximized: window.maximized }"
     :style="windowStyle"
     @mousedown="bringToFront"
+    @touchstart="bringToFront"
     v-show="!window.minimized"
   >
-    <div class="window-titlebar" @mousedown.prevent="startDrag">
+    <div class="window-titlebar" @mousedown.prevent="startDrag" @touchstart.prevent="startDrag">
       <span class="window-title">{{ t(window.titleKey) }}</span>
       <div class="window-controls">
         <button class="btn-minimize" @click.stop="$emit('minimize', window.id)">─</button>
@@ -201,5 +224,21 @@ function onMouseUp() {
   flex: 1;
   overflow: auto;
   position: relative;
+}
+
+/* 移动端响应式 */
+@media (max-width: 768px) {
+  .window-titlebar {
+    height: 40px;
+    padding: 0 8px;
+  }
+  .window-controls button {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+  .window-title {
+    font-size: 12px;
+  }
 }
 </style>

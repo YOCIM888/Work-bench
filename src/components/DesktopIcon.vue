@@ -130,4 +130,36 @@ function handleDrop(e) {
   line-height: 1.3;
   pointer-events: none;
 }
+
+/* 移动端响应式 */
+@media (max-width: 768px) {
+  .desktop-icon {
+    width: 68px;
+    padding: 6px;
+  }
+  .icon-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+  }
+  .icon-name {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .desktop-icon {
+    width: 60px;
+    padding: 4px;
+  }
+  .icon-image {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+  .icon-name {
+    font-size: 10px;
+  }
+}
 </style>

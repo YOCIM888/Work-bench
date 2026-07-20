@@ -162,4 +162,27 @@ onMounted(() => {
   opacity: 1;
   color: var(--accent-color);
 }
+
+/* 移动端响应式 */
+@media (max-width: 768px) {
+  .desktop {
+    padding: 12px;
+    gap: 16px;
+    justify-content: flex-start;
+  }
+  .btn-reset {
+    bottom: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .desktop {
+    padding: 8px;
+    gap: 10px;
+  }
+}
 </style>

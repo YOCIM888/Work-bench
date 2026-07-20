@@ -158,4 +158,42 @@ if (typeof document !== 'undefined') {
   background: var(--accent-bg);
   font-weight: 500;
 }
+
+/* 移动端响应式 */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 8px 12px;
+  }
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+  }
+  .logo-text {
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+  .header-left {
+    gap: 8px;
+  }
+  .header-right {
+    gap: 6px;
+  }
+  .theme-toggle {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+  .lang-switcher {
+    padding: 4px 8px;
+  }
+  .lang-label {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-text {
+    display: none;
+  }
+}
 </style>

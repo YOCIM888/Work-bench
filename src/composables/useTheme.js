@@ -23,7 +23,8 @@ function initTheme() {
   } else if (saved === 'light') {
     isDark.value = false
   } else {
-    isDark.value = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false
+    // 默认使用夜间模式
+    isDark.value = true
   }
   applyTheme()
 }

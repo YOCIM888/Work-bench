@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, provide } from 'vue'
+import { reactive, ref, provide } from 'vue'
 import { createI18n } from './i18n/index.js'
 import { useTheme } from './composables/useTheme.js'
 import AppHeader from './components/AppHeader.vue'
@@ -38,31 +38,67 @@ const apps = [
 
 const openWindows = reactive([])
 let nextWindowId = 1
+const activeWindowId = ref(null)
+
+function isMobile() {
+  return typeof window !== 'undefined' && window.innerWidth < 768
+}
+
+function getDefaultWindowSize() {
+  if (isMobile()) {
+    return { width: window.innerWidth - 16, height: window.innerHeight - 100 }
+  }
+  return { width: 700, height: 500 }
+}
+
+function getDefaultWindowPos(winCount) {
+  if (isMobile()) {
+    return { x: 8, y: 40 + (winCount * 8) }
+  }
+  return { x: 100 + (winCount * 30), y: 80 + (winCount * 30) }
+}
 
 function openApp(appId) {
   const app = apps.find(a => a.id === appId)
   if (!app) return
-  openWindows.push({
+  const size = getDefaultWindowSize()
+  const pos = getDefaultWindowPos(openWindows.length)
+  const newWin = {
     id: nextWindowId++,
     appId: app.id,
     titleKey: app.nameKey,
+    icon: app.icon,
     minimized: false,
-    maximized: false,
-    x: 100 + (openWindows.length * 30),
-    y: 80 + (openWindows.length * 30),
-    width: 700,
-    height: 500
-  })
+    maximized: isMobile(),
+    x: pos.x,
+    y: pos.y,
+    width: size.width,
+    height: size.height
+  }
+  openWindows.push(newWin)
+  activeWindowId.value = newWin.id
 }
 
 function closeWindow(id) {
   const index = openWindows.findIndex(w => w.id === id)
-  if (index !== -1) openWindows.splice(index, 1)
+  if (index !== -1) {
+    openWindows.splice(index, 1)
+    if (activeWindowId.value === id) {
+      activeWindowId.value = openWindows.length > 0 ? openWindows[openWindows.length - 1].id : null
+    }
+  }
 }
 
 function minimizeWindow(id) {
   const win = openWindows.find(w => w.id === id)
-  if (win) win.minimized = true
+  if (win) {
+    win.minimized = true
+    if (activeWindowId.value === id) {
+      // 找下一个未最小化的窗口作为活动窗口
+      const nextActive = openWindows.filter(w => !w.minimized && w.id !== id).pop()
+      activeWindowId.value = nextActive ? nextActive.id : null
+    }
+  }
 }
 
 function maximizeWindow(id) {
@@ -76,6 +112,19 @@ function restoreWindow(id) {
     win.minimized = false
     win.maximized = false
   }
+  activeWindowId.value = id
+}
+
+function focusWindow(id) {
+  activeWindowId.value = id
+  const win = openWindows.find(w => w.id === id)
+  if (win && win.minimized) {
+    win.minimized = false
+  }
+}
+
+function onWindowFocus(id) {
+  activeWindowId.value = id
 }
 </script>
 
@@ -86,10 +135,18 @@ function restoreWindow(id) {
     v-for="win in openWindows"
     :key="win.id"
     :window="win"
+    :is-active="activeWindowId === win.id"
     @close="closeWindow"
     @minimize="minimizeWindow"
     @maximize="maximizeWindow"
     @restore="restoreWindow"
+    @focus="onWindowFocus"
   />
-  <AppFooter :open-windows="openWindows" @restore="restoreWindow" />
+  <AppFooter
+    :open-windows="openWindows"
+    :active-window-id="activeWindowId"
+    @restore="restoreWindow"
+    @focus="focusWindow"
+    @minimize="minimizeWindow"
+  />
 </template>
