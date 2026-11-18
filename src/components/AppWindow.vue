@@ -21,6 +21,27 @@ import DomainLookupApp from '@/apps/domain-lookup/DomainLookupApp.vue'
 import DataConverterApp from '@/apps/data-converter/DataConverterApp.vue'
 import RadixConverterApp from '@/apps/radix-converter/RadixConverterApp.vue'
 import QrcodeApp from '@/apps/qrcode/QrcodeApp.vue'
+import UuidApp from '@/apps/uuid/UuidApp.vue'
+import HtmlEntityApp from '@/apps/html-entity/HtmlEntityApp.vue'
+import JwtDecodeApp from '@/apps/jwt-decode/JwtDecodeApp.vue'
+import TextCountApp from '@/apps/text-count/TextCountApp.vue'
+import TextCaseApp from '@/apps/text-case/TextCaseApp.vue'
+import CsvJsonApp from '@/apps/csv-json/CsvJsonApp.vue'
+import HttpStatusApp from '@/apps/http-status/HttpStatusApp.vue'
+import LoremApp from '@/apps/lorem/LoremApp.vue'
+import ImageCompressApp from '@/apps/image-compress/ImageCompressApp.vue'
+import GradientApp from '@/apps/gradient/GradientApp.vue'
+import PxRemApp from '@/apps/px-rem/PxRemApp.vue'
+import UnitConverterApp from '@/apps/unit-converter/UnitConverterApp.vue'
+import MorseApp from '@/apps/morse/MorseApp.vue'
+import AgeCalculatorApp from '@/apps/age-calculator/AgeCalculatorApp.vue'
+import StopwatchApp from '@/apps/stopwatch/StopwatchApp.vue'
+import TextCleanApp from '@/apps/text-clean/TextCleanApp.vue'
+import AsciiTableApp from '@/apps/ascii-table/AsciiTableApp.vue'
+import CharFrequencyApp from '@/apps/char-frequency/CharFrequencyApp.vue'
+import RandomNumberApp from '@/apps/random-number/RandomNumberApp.vue'
+import WorldClockApp from '@/apps/world-clock/WorldClockApp.vue'
+import BmiApp from '@/apps/bmi/BmiApp.vue'
 
 const { t } = useI18n()
 
@@ -65,7 +86,28 @@ const appComponent = computed(() => {
     'domain-lookup': DomainLookupApp,
     'data-converter': DataConverterApp,
     'radix-converter': RadixConverterApp,
-    'qrcode': QrcodeApp
+    'qrcode': QrcodeApp,
+    'uuid': UuidApp,
+    'html-entity': HtmlEntityApp,
+    'jwt-decode': JwtDecodeApp,
+    'text-count': TextCountApp,
+    'text-case': TextCaseApp,
+    'csv-json': CsvJsonApp,
+    'http-status': HttpStatusApp,
+    'lorem': LoremApp,
+    'image-compress': ImageCompressApp,
+    'gradient': GradientApp,
+    'px-rem': PxRemApp,
+    'unit-converter': UnitConverterApp,
+    'morse': MorseApp,
+    'age-calculator': AgeCalculatorApp,
+    'stopwatch': StopwatchApp,
+    'text-clean': TextCleanApp,
+    'ascii-table': AsciiTableApp,
+    'char-frequency': CharFrequencyApp,
+    'random-number': RandomNumberApp,
+    'world-clock': WorldClockApp,
+    'bmi': BmiApp
   }
   return map[props.window.appId] || null
 })
@@ -103,8 +145,11 @@ function bringToFront() {
 
 function startDrag(e) {
   if (props.window.maximized) return
-  // 如果点击的是窗口控制按钮，不启动拖动
+  // 如果点击的是窗口控制按钮，不启动拖动，也不能阻止默认行为
+  // 否则移动端不会合成 click 事件，三个按钮将无法点击
   if (e.target.closest('.window-controls')) return
+  // 仅在真正拖动标题栏时阻止页面滚动
+  if (e.type === 'touchstart' && typeof e.preventDefault === 'function') e.preventDefault()
   isDragging.value = true
   const clientX = e.touches ? e.touches[0].clientX : e.clientX
   const clientY = e.touches ? e.touches[0].clientY : e.clientY
@@ -151,7 +196,7 @@ function onMouseUp() {
     @touchstart="bringToFront"
     v-show="!window.minimized"
   >
-    <div class="window-titlebar" @mousedown.prevent="startDrag" @touchstart.prevent="startDrag">
+    <div class="window-titlebar" @mousedown.prevent="startDrag" @touchstart="startDrag">
       <span class="window-title">{{ t(window.titleKey) }}</span>
       <div class="window-controls">
         <button class="btn-minimize" @click.stop="$emit('minimize', window.id)">─</button>

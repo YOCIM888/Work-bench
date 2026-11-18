@@ -6,6 +6,7 @@ import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
 import Desktop from './components/Desktop.vue'
 import AppWindow from './components/AppWindow.vue'
+import AppToast from './components/AppToast.vue'
 
 const i18n = createI18n()
 const { isDark, toggleTheme, initTheme } = useTheme()
@@ -33,7 +34,28 @@ const apps = [
   { id: 'drawing-board', nameKey: 'desktop.drawingBoard', icon: '/icon/drawing-board.svg' },
   { id: 'password-generator', nameKey: 'desktop.passwordGenerator', icon: '/icon/password-generator.svg' },
   { id: 'timestamp-converter', nameKey: 'desktop.timestampConverter', icon: '/icon/timestamp-converter.svg' },
-  { id: 'pomodoro', nameKey: 'desktop.pomodoro', icon: '/icon/pomodoro.svg' }
+  { id: 'pomodoro', nameKey: 'desktop.pomodoro', icon: '/icon/pomodoro.svg' },
+  { id: 'uuid', nameKey: 'desktop.uuid', icon: '/icon/uuid.svg' },
+  { id: 'html-entity', nameKey: 'desktop.htmlEntity', icon: '/icon/html-entity.svg' },
+  { id: 'jwt-decode', nameKey: 'desktop.jwtDecode', icon: '/icon/jwt-decode.svg' },
+  { id: 'text-count', nameKey: 'desktop.textCount', icon: '/icon/text-count.svg' },
+  { id: 'text-case', nameKey: 'desktop.textCase', icon: '/icon/text-case.svg' },
+  { id: 'csv-json', nameKey: 'desktop.csvJson', icon: '/icon/csv-json.svg' },
+  { id: 'http-status', nameKey: 'desktop.httpStatus', icon: '/icon/http-status.svg' },
+  { id: 'lorem', nameKey: 'desktop.lorem', icon: '/icon/lorem.svg' },
+  { id: 'image-compress', nameKey: 'desktop.imageCompress', icon: '/icon/image-compress.svg' },
+  { id: 'gradient', nameKey: 'desktop.gradient', icon: '/icon/gradient.svg' },
+  { id: 'px-rem', nameKey: 'desktop.pxRem', icon: '/icon/px-rem.svg' },
+  { id: 'unit-converter', nameKey: 'desktop.unitConverter', icon: '/icon/unit-converter.svg' },
+  { id: 'morse', nameKey: 'desktop.morse', icon: '/icon/morse.svg' },
+  { id: 'age-calculator', nameKey: 'desktop.ageCalculator', icon: '/icon/age-calculator.svg' },
+  { id: 'stopwatch', nameKey: 'desktop.stopwatch', icon: '/icon/stopwatch.svg' },
+  { id: 'text-clean', nameKey: 'desktop.textClean', icon: '/icon/text-clean.svg' },
+  { id: 'ascii-table', nameKey: 'desktop.asciiTable', icon: '/icon/ascii-table.svg' },
+  { id: 'char-frequency', nameKey: 'desktop.charFrequency', icon: '/icon/char-frequency.svg' },
+  { id: 'random-number', nameKey: 'desktop.randomNumber', icon: '/icon/random-number.svg' },
+  { id: 'world-clock', nameKey: 'desktop.worldClock', icon: '/icon/world-clock.svg' },
+  { id: 'bmi', nameKey: 'desktop.bmi', icon: '/icon/bmi.svg' }
 ]
 
 const openWindows = reactive([])
@@ -149,4 +171,5 @@ function onWindowFocus(id) {
     @focus="focusWindow"
     @minimize="minimizeWindow"
   />
+  <AppToast />
 </template>
