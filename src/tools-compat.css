@@ -1,0 +1,69 @@
+/* 兼容层：为从 tools.yocim.top 迁移过来的工具提供原有的设计令牌。
+   所有变量都限定在 .tool-app 作用域内，避免影响 Workbench 原生应用。 */
+
+.tool-app {
+  color-scheme: light;
+  --bg: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-soft: #f8fafc;
+  --bg-hover: #f1f5f9;
+  --primary-tint: #eef2ff;
+  --code-bg: #0f172a;
+  --code-fg: #e2e8f0;
+  --text: #0f172a;
+  --text-soft: #64748b;
+  --border: #e2e8f0;
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --danger: #ef4444;
+  --success: #10b981;
+  --success-tint: #ecfdf5;
+  --success-fg: #065f46;
+  --danger-tint: #fef2f2;
+  --danger-fg: #991b1b;
+  --warning-tint: #fef3c7;
+  --warning-fg: #d97706;
+  --mark-bg: #fef08a;
+  --mark-fg: #713f12;
+  --scrollbar: #cbd5e1;
+  --scrollbar-hover: #94a3b8;
+  --overlay: rgba(15, 23, 42, 0.4);
+  --shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --radius: 12px;
+}
+
+[data-theme='dark'] .tool-app {
+  color-scheme: dark;
+  --bg: #0f172a;
+  --bg-card: #1e293b;
+  --bg-soft: #1e293b;
+  --bg-hover: #334155;
+  --primary-tint: #312e81;
+  --code-bg: #020617;
+  --code-fg: #e2e8f0;
+  --text: #e2e8f0;
+  --text-soft: #94a3b8;
+  --border: #334155;
+  --primary: #818cf8;
+  --primary-hover: #6366f1;
+  --danger: #f87171;
+  --success: #34d399;
+  --success-tint: #064e3b;
+  --success-fg: #6ee7b7;
+  --danger-tint: #450a0a;
+  --danger-fg: #fca5a5;
+  --warning-tint: #451a03;
+  --warning-fg: #fbbf24;
+  --mark-bg: #ca8a04;
+  --mark-fg: #fef9c3;
+  --scrollbar: #475569;
+  --scrollbar-hover: #64748b;
+  --overlay: rgba(0, 0, 0, 0.6);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.tool-app {
+  display: block;
+  padding: 16px;
+  color: var(--text);
+}
